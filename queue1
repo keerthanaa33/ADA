@@ -1,0 +1,26 @@
+static int min_intArr(const int * const numArr, const int numArrLen){
+	int min = numArr[0];
+	for (int i = 1; i < numArrLen; i += 1){
+		if (numArr[i] < min){
+			min = numArr[i];
+		}
+	}
+	return min;
+}
+
+int minimumCoins(
+	const int * const priceArr,
+	const int priceArrLen
+){
+	int dp[priceArrLen];
+	for (int i = priceArrLen - 1; i >= 0; i -= 1){
+		dp[i] = priceArr[i];
+		if ( i + 1 < priceArrLen - (i + 1) ){
+			dp[i] += min_intArr(
+				dp + (i + 1),
+				(i + 1) + 1
+			);
+		}
+	}
+	return dp[0];
+}
